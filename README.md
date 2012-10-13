@@ -46,12 +46,12 @@ grunt.initConfig({
   // produce html
   targethtml: {
     debug: {
-      input: 'public/index.html',
-      output: 'public/dist/debug/index.html'
+      src: 'public/index.html',
+      dest: 'public/dist/debug/index.html'
     },
     release: {
-      input: 'public/index.html',
-      output: 'public/dist/release/index.html'
+      src: 'public/index.html',
+      dest: 'public/dist/release/index.html'
     }
   },
 

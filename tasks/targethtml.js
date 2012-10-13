@@ -17,22 +17,22 @@ module.exports = function(grunt) {
 
     grunt.registerMultiTask('targethtml', 'Produces html-output depending on grunt release version', function() {
         if (!this.data) { return false; }
-        grunt.helper('targethtml', this.target, this.data);
+        grunt.helper('targethtml', this.target, this.file);
     });
 
     // ==========================================================================
     // HELPERS
     // ==========================================================================
 
-    grunt.registerHelper('targethtml', function(target, data) {
-        var file = grunt.file;
-        var contents = file.read(data.input);
+    grunt.registerHelper('targethtml', function(target, file) {
+        var f = grunt.file;
+        var contents = f.read(file.src);
         if(contents) {
             contents = contents.replace(new RegExp('<!--[\\[\\(]if target ' + target + '[\\]\\)]>(<!-->)?([\\s\\S]*?)(<!--)?<![\\[\\(]endif[\\]\\)]-->', 'g'), '$2');
             contents = contents.replace(new RegExp('^[\\s\\t]+<!--[\\[\\(]if target .*?[\\]\\)]>(<!-->)?([\\s\\S]*?)(<!--)?<![\\[\\(]endif[\\]\\)]-->[\r\n]*', 'gm'), '');
             contents = contents.replace(new RegExp('<!--[\\[\\(]if target .*?[\\]\\)]>(<!-->)?([\\s\\S]*?)(<!--)?<![\\[\\(]endif[\\]\\)]-->[\r\n]*', 'g'), '');
-            file.write(data.output, contents);
-            console.log('Created ' + data.output, target);
+            f.write(file.dest, contents);
+            console.log('Created ' + file.dest, target);
         }
     });
 
