@@ -1,32 +1,22 @@
+'use strict';
+
 var grunt = require('grunt');
 
-/*
-  ======== A Handy Little Nodeunit Reference ========
-  https://github.com/caolan/nodeunit
+exports.targethtml = {
+  main: function(test) {
+    var expected, result;
 
-  Test methods:
-    test.expect(numAssertions)
-    test.done()
-  Test assertions:
-    test.ok(value, [message])
-    test.equal(actual, expected, [message])
-    test.notEqual(actual, expected, [message])
-    test.deepEqual(actual, expected, [message])
-    test.notDeepEqual(actual, expected, [message])
-    test.strictEqual(actual, expected, [message])
-    test.notStrictEqual(actual, expected, [message])
-    test.throws(block, [error], [message])
-    test.doesNotThrow(block, [error], [message])
-    test.ifError(value)
-*/
 
-exports['targethtml'] = {
-  setUp: function(done) {
-    // setup here
-    done();
-  },
-  'helper': function(test) {
-    // todo
+    test.expect(2);
+
+    result = grunt.file.read('tmp/dev.html');
+    expected = grunt.file.read('test/expected/dev.html');
+    test.equal(result, expected, 'should process :dev target');
+
+    result = grunt.file.read('tmp/dist.html');
+    expected = grunt.file.read('test/expected/dist.html');
+    test.equal(result, expected, 'should process :dist target');
+
     test.done();
   }
 };

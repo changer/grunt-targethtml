@@ -1,63 +1,75 @@
-# grunt-targethtml
+# grunt-targethtml [![Build Status](https://travis-ci.org/srigi/grunt-targethtml.png)](https://travis-ci.org/srigi/grunt-targethtml)
 
 Produces html-output depending on grunt target
 
 ## Getting Started
-Install this grunt plugin next to your project's [grunt.js gruntfile][getting_started] with: `npm install grunt-targethtml`
 
-Then add this line to your project's `grunt.js` gruntfile:
+Install this grunt plugin by running this command in root of your project,
+
+```bash
+npm install grunt-targethtml
+```
+Then add this line to your project's `Gruntfile.js`.
 
 ```javascript
 grunt.loadNpmTasks('grunt-targethtml');
 ```
 
-[grunt]: https://github.com/cowboy/grunt
-[getting_started]: https://github.com/cowboy/grunt/blob/master/docs/getting_started.md
-
 ## Documentation
+
+Configure task in `Gruntfile.js`,
+
+```javascript
+grunt.initConfig({
+  // ...other configs
+
+  targethtml: {
+    dist: {
+      files: {
+        'dist/public/index.html': 'src/public/index.html'
+      }
+    }
+  },
+
+  // ...other configs
+});
+```
 
 Use conditional statements in your html based on grunt targets like:
 
 ```html
-<!--(if target release)><link rel="stylesheet" type="text/css" href="styles.css" /><!(endif)-->
-<!--(if target debug)><!--><link rel="stylesheet/less" type="text/css" href="styles.less">
-<script type="text/javascript">var less = { env: 'development' };</script>
-<script src="libs/less.js" type="text/javascript"></script><!--<!(endif)-->
+<!--(if target dev)><!-->
+  <link rel="stylesheet" href="dev.css">
+<!--<!(endif)-->
+
+<!--(if target dev)><!-->
+  <script src="dev.js"></script>
+  <script>
+    var less = { env:'development' };
+  </script>
+<!--<!(endif)-->
+
+
+<!--(if target dist)>
+  <link rel="stylesheet" href="release.css">
+<!(endif)-->
+
+<!--(if target dist)>
+  <script src="release.js"></script>
+<!(endif)-->
 ```
 
-Or
+Note, that `dist` section is commented out - during development you are working with `dev` set of assets.
+During processing `targethtml:dist`, comment tags defining `dist` section gets removed (section become uncommented) and any other sections (other than `dist`) gets removed completly.
 
+Resulting HTML code
 ```html
-<!--(if target release)><script data-main="app/main" src="require.js"></script><!(endif)-->
-<!--(if target debug)><script data-main="app/main" src="require.js"></script><!(endif)-->
-<!--(if target dummy)><!--><script data-main="app/main" src="libs/require.js"></script><!--<!(endif)-->
-```
+  <link rel="stylesheet" href="release.css">
 
-In here the dummy entry will never be outputed after grunt, but this line will work when the HTML is not being parsed (in development-setup).
+  <script src="release.js"></script>
+```
 
 You could use the [if...] notation like we're used from the [if lt IE 9], but ironically that fails in IE.
-
-Configure which files to be outputted in your `initConfig`:
-
-```javascript
-grunt.initConfig({
-  // ... other configs
-
-  // produce html
-  targethtml: {
-    debug: {
-      src: 'public/index.html',
-      dest: 'public/dist/debug/index.html'
-    },
-    release: {
-      src: 'public/index.html',
-      dest: 'public/dist/release/index.html'
-    }
-  },
-
-  // ... other configs
-});
-```
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][grunt].
@@ -67,7 +79,11 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 * 9/1/12 - v0.1.1 - Fixed naming issues
 * 9/7/12 - v0.1.2 - Accept round braces in if statements for IE support
 * 10/14/12 - v0.1.3 - Adjustments towards grunt file api
+* 1/3/13 - v0.2.0 - Compatility with Grunt v0.4
 
 ## License
 Copyright (c) 2012 Ruben Stolk
 Licensed under the MIT license.
+
+[grunt]: https://github.com/gruntjs/grunt
+[getting_started]: https://github.com/gruntjs/grunt/wiki/Getting-started

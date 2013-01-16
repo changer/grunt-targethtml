@@ -1,0 +1,30 @@
+<!--(if target dev)><!-->
+  <link rel="stylesheet" href="dev.css">
+<!--<!(endif)-->
+
+<!--(if target dev)><!-->
+  <script src="dev.js"></script>
+  <script>
+    var less = { env:'development' };
+  </script>
+<!--<!(endif)-->
+
+
+
+<!--(if target dist)>
+  <link rel="stylesheet" href="release.css">
+<!(endif)-->
+
+<!--(if target dist)>
+  <script src="release.js"></script>
+<!(endif)-->
+
+
+
+<!--(if target foo)><!-->
+  <link rel="stylesheet" href="foo.css">
+<!--<!(endif)-->
+
+<!--(if target bar)>
+  <link rel="stylesheet" href="bar.css">
+<!(endif)-->
