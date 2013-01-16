@@ -17,7 +17,7 @@ module.exports = function(grunt) {
 
     grunt.registerMultiTask('targethtml', 'Produces html-output depending on grunt release version', function() {
         if (!this.data) { return false; }
-        grunt.helper('targethtml', this.target, this.file);
+        grunt.helper('targethtml', this.target, this.data );
     });
 
     // ==========================================================================
@@ -26,13 +26,38 @@ module.exports = function(grunt) {
 
     grunt.registerHelper('targethtml', function(target, file) {
         var f = grunt.file;
-        var contents = f.read(file.src);
-        if(contents) {
-            contents = contents.replace(new RegExp('<!--[\\[\\(]if target ' + target + '[\\]\\)]>(<!-->)?([\\s\\S]*?)(<!--)?<![\\[\\(]endif[\\]\\)]-->', 'g'), '$2');
-            contents = contents.replace(new RegExp('^[\\s\\t]+<!--[\\[\\(]if target .*?[\\]\\)]>(<!-->)?([\\s\\S]*?)(<!--)?<![\\[\\(]endif[\\]\\)]-->[\r\n]*', 'gm'), '');
-            contents = contents.replace(new RegExp('<!--[\\[\\(]if target .*?[\\]\\)]>(<!-->)?([\\s\\S]*?)(<!--)?<![\\[\\(]endif[\\]\\)]-->[\r\n]*', 'g'), '');
-            f.write(file.dest, contents);
-            console.log('Created ' + file.dest, target);
+
+        if ( ! Array.isArray( file.src ) ) {
+            file.src = [ file.src ];
+        }
+
+        if ( ! Array.isArray( file.out ) ) {
+            file.out = [ file.out ];
+        }
+
+        for ( var i = 0; i < file.src.length; i++ ){
+
+            var src = file.src[ i ];
+            var out = file.out[ i ];
+
+            var contents = f.read(src);
+            if(contents) {
+                contents = contents.replace(new RegExp('<!--[\\[\\(]if target ' + target + '[\\]\\)]>(<!-->)?([\\s\\S]*?)(<!--)?<![\\[\\(]endif[\\]\\)]-->', 'g'), '$2');
+                contents = contents.replace(new RegExp('^[\\s\\t]+<!--[\\[\\(]if target .*?[\\]\\)]>(<!-->)?([\\s\\S]*?)(<!--)?<![\\[\\(]endif[\\]\\)]-->[\r\n]*', 'gm'), '');
+                contents = contents.replace(new RegExp('<!--[\\[\\(]if target .*?[\\]\\)]>(<!-->)?([\\s\\S]*?)(<!--)?<![\\[\\(]endif[\\]\\)]-->[\r\n]*', 'g'), '');
+
+                if ( file.dist ) {
+
+                    f.write( file.dist, contents );
+                    console.log('Created ' + file.dist, target);
+                    return;
+
+                } else {
+
+                    f.write(out, contents);
+                    console.log('Created ' + out, target);
+                }
+            }
         }
     });
 
