@@ -14,7 +14,7 @@ module.exports = function(grunt) {
 
     // The source files to be processed. The "nonull" option is used
     // to retain invalid files/patterns so they can be warned about.
-    var files = grunt.file.expand({ nonull:true }, this.file.srcRaw);
+    var files = grunt.file.expand({ nonull:true }, this.files[0].src);
 
     // Warn if a source file/pattern was invalid.
     var invalidSrc = files.some(function(filepath) {
@@ -33,7 +33,7 @@ module.exports = function(grunt) {
         contents = contents.replace(new RegExp('<!--[\\[\\(]if target ' + this.target + '[\\]\\)]>(<!-->)?([\\s\\S]*?)(<!--)?<![\\[\\(]endif[\\]\\)]-->', 'g'), '$2');
         contents = contents.replace(new RegExp('^[\\s\\t]+<!--[\\[\\(]if target .*?[\\]\\)]>(<!-->)?([\\s\\S]*?)(<!--)?<![\\[\\(]endif[\\]\\)]-->[\r\n]*', 'gm'), '');
         contents = contents.replace(new RegExp('<!--[\\[\\(]if target .*?[\\]\\)]>(<!-->)?([\\s\\S]*?)(<!--)?<![\\[\\(]endif[\\]\\)]-->[\r\n]*', 'g'), '');
-        grunt.file.write(this.file.dest, contents);
+        grunt.file.write(this.files[0].dest, contents);
       }
     }.bind(this));
 
@@ -41,6 +41,6 @@ module.exports = function(grunt) {
     if (this.errorCount) { return false; }
 
     // Otherwise, print a success message.
-    grunt.log.ok('File "' + this.file.dest + '" created.');
+    grunt.log.ok('File "' + this.files[0].dest + '" created.');
   });
 };
