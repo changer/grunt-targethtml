@@ -35,7 +35,8 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'tmp/dist.html': 'test/fixtures/index.html'
+          'tmp/dist.html': 'test/fixtures/index.html',
+          'tmp/second.html': 'test/fixtures/index.html'
         }
       }
     },

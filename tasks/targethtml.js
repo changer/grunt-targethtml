@@ -12,35 +12,30 @@ module.exports = function(grunt) {
 
   grunt.registerMultiTask('targethtml', 'Produces html-output depending on grunt release version', function() {
 
-    // The source files to be processed. The "nonull" option is used
-    // to retain invalid files/patterns so they can be warned about.
-    var files = grunt.file.expand({ nonull:true }, this.files[0].src);
+    var target = this.target;
 
-    // Warn if a source file/pattern was invalid.
-    var invalidSrc = files.some(function(filepath) {
-      if (!grunt.file.exists(filepath)) {
-        grunt.log.error('Source file "' + filepath + '" not found.');
-        return true;
+    this.files.forEach(function(file) {
+
+      var src = file.src[ 0 ];
+      var dest= file.dest;
+
+      if (!grunt.file.exists(src)) {
+        grunt.log.error('Source file "' + src + '" not found.');
       }
-    });
-    if (invalidSrc) { return false; }
 
-    // Process files
-    files.forEach(function(filepath) {
-      var contents = grunt.file.read(filepath);
+      var contents = grunt.file.read(src);
 
       if (contents) {
-        contents = contents.replace(new RegExp('<!--[\\[\\(]if target ' + this.target + '[\\]\\)]>(<!-->)?([\\s\\S]*?)(<!--)?<![\\[\\(]endif[\\]\\)]-->', 'g'), '$2');
+        contents = contents.replace(new RegExp('<!--[\\[\\(]if target ' + target + '[\\]\\)]>(<!-->)?([\\s\\S]*?)(<!--)?<![\\[\\(]endif[\\]\\)]-->', 'g'), '$2');
         contents = contents.replace(new RegExp('^[\\s\\t]+<!--[\\[\\(]if target .*?[\\]\\)]>(<!-->)?([\\s\\S]*?)(<!--)?<![\\[\\(]endif[\\]\\)]-->[\r\n]*', 'gm'), '');
         contents = contents.replace(new RegExp('<!--[\\[\\(]if target .*?[\\]\\)]>(<!-->)?([\\s\\S]*?)(<!--)?<![\\[\\(]endif[\\]\\)]-->[\r\n]*', 'g'), '');
-        grunt.file.write(this.files[0].dest, contents);
+        grunt.file.write(dest, contents);
       }
-    }.bind(this));
 
-    // Fail task if errors were logged.
+      grunt.log.ok('File "' + dest + '" created.');
+
+    });
+
     if (this.errorCount) { return false; }
-
-    // Otherwise, print a success message.
-    grunt.log.ok('File "' + this.files[0].dest + '" created.');
   });
 };

@@ -62,6 +62,25 @@ Use conditional statements in your html based on grunt targets like:
 Note, that `dist` section is commented out - during development you are working with `dev` set of assets.
 During processing `targethtml:dist`, comment tags defining `dist` section gets removed (section become uncommented) and any other sections (other than `dist`) gets removed completly.
 
+The plugin also allows to modify multiple files within one target:
+
+```javascript
+grunt.initConfig({
+  // ...other configs
+
+  targethtml: {
+    dist: {
+      files: {
+        'dist/public/index.html': 'src/public/index.html',
+        'dist/public/mobile.html': 'src/public/mobile.html'
+      }
+    }
+  },
+
+  // ...other configs
+});
+```
+
 Resulting HTML code
 ```html
   <link rel="stylesheet" href="release.css">
