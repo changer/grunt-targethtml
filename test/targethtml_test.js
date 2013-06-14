@@ -7,7 +7,7 @@ exports.targethtml = {
     var expected, result;
 
 
-    test.expect(2);
+    test.expect(3);
 
     result = grunt.file.read('tmp/dev.html');
     expected = grunt.file.read('test/expected/dev.html');
@@ -16,6 +16,10 @@ exports.targethtml = {
     result = grunt.file.read('tmp/dist.html');
     expected = grunt.file.read('test/expected/dist.html');
     test.equal(result, expected, 'should process :dist target');
+
+    result = grunt.file.read('tmp/release.html');
+    expected = grunt.file.read('test/expected/release.html');
+    test.equal(result, expected, 'should process :release target');
 
     test.done();
   }

@@ -37,6 +37,18 @@ module.exports = function(grunt) {
         files: {
           'tmp/dist.html': 'test/fixtures/index.html'
         }
+      },
+      release: {
+        options: {
+          versionTags: {
+            cssver: '001',
+            jsver: '002'
+          }
+        },
+
+        files: {
+          'tmp/release.html': 'test/fixtures/index.html'
+        }
       }
     },
 
