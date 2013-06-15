@@ -1,6 +1,6 @@
 # grunt-targethtml [![Build Status](https://travis-ci.org/srigi/grunt-targethtml.png)](https://travis-ci.org/srigi/grunt-targethtml)
 
-Produces html-output depending on grunt target
+Preproces HTML files by using *target tags* depending on current grunt target. This grunt plugin allows you to specify different sets of assets for `dev` or `release` versions of your HTML files.
 
 ## Getting Started
 
@@ -20,22 +20,16 @@ grunt.loadNpmTasks('grunt-targethtml');
 Configure task in `Gruntfile.js`,
 
 ```javascript
-grunt.initConfig({
-  // ...other configs
-
-  targethtml: {
-    dist: {
-      files: {
-        'dist/public/index.html': 'src/public/index.html'
-      }
+targethtml: {
+  dist: {
+    files: {
+      'dist/public/index.html': 'src/public/index.html'
     }
-  },
-
-  // ...other configs
-});
+  }
+}
 ```
 
-Use conditional statements in your html based on grunt targets like:
+This instructs `targethtml` to process source file `src/public/index.html` and store processed file into `dist/public/index.html`. Use *target tags* in your HTML files like this:
 
 ```html
 <!--(if target dev)><!-->
@@ -60,35 +54,70 @@ Use conditional statements in your html based on grunt targets like:
 ```
 
 Note, that `dist` section is commented out - during development you are working with `dev` set of assets.
-During processing `targethtml:dist`, comment tags defining `dist` section gets removed (section become uncommented) and any other sections (other than `dist`) gets removed completly.
-
-The plugin also allows to modify multiple files within one target:
-
-```javascript
-grunt.initConfig({
-  // ...other configs
-
-  targethtml: {
-    dist: {
-      files: {
-        'dist/public/index.html': 'src/public/index.html',
-        'dist/public/mobile.html': 'src/public/mobile.html'
-      }
-    }
-  },
-
-  // ...other configs
-});
-```
+During processing `targethtml:dist`, `dist` section gets active and any other sections (other than `dist`) gets removed.
 
 Resulting HTML code
+
 ```html
   <link rel="stylesheet" href="release.css">
 
   <script src="release.js"></script>
 ```
 
+The plugin allows to process multiple files within one target:
+
+```javascript
+targethtml: {
+  dist: {
+    files: {
+      'dist/public/index.html': 'src/public/index.html',
+      'dist/public/mobile.html': 'src/public/mobile.html'
+    }
+  }
+}
+```
+
 You could use the [if...] notation like we're used from the [if lt IE 9], but ironically that fails in IE.
+
+### Curly tags
+
+Between *target tags* you can use simple templating by empovering *curly tags* to pass custom variables. Curly tags must be defined like this:
+
+```html
+<!--(if target dist)>
+  <link rel="stylesheet" href="release.css?{{rlsdate}}">
+<!(endif)-->
+
+<!--(if target dist)>
+  <script src="release.js?{{rlsdate}}"></script>
+<!(endif)-->
+```
+
+Curly tags helps you implement cache busting technique to update assets paths in production. Curly tags are defined in `options` of `targethtml` task. You can effectively use Grunt's templating when definig value of curly tags.
+
+```js
+targethtml: {
+  dist: {
+    options: {
+      curlyTags: {
+        rlsdate: '<%= grunt.template.today("yyyymmdd") %>'
+      }
+    },
+    files: {
+      'dist/public/index.html': 'src/public/index.html'
+    }
+  }
+}
+```
+
+Running `targethtml:dist` target will yield (at Jan 1st, 2013):
+
+```html
+  <link rel="stylesheet" href="release.css?20130101">
+  <script src="release.js?20130101"></script>
+```
+
+Please note that you can use only string as name and value of *curly tag*!
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][grunt].
@@ -99,7 +128,10 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 * 9/7/12 - v0.1.2 - Accept round braces in if statements for IE support
 * 10/14/12 - v0.1.3 - Adjustments towards grunt file api
 * 1/3/13 - v0.2.0 - Compatility with Grunt v0.4
-* 2/25/13 - v0.2.1 - Fixed towards Grunt 0.4
+* 1/29/13 - v0.2.1 - Fixed towards Grunt 0.4
+* 2/26/13 - v0.2.2 - Allows to process multiple files within one target
+* 5/13/13 - v0.2.3 - Supports wildcards in files option
+* 6/15/13 - v0.2.4 - Curly tags
 
 ## License
 Copyright (c) 2012 Ruben Stolk

@@ -13,7 +13,10 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('targethtml', 'Produces html-output depending on grunt release version', function() {
 
     var target = this.target,
-        path = require('path');
+        path = require('path'),
+        options = this.options({
+          curlyTags: {}
+        });
 
     this.files.forEach(function(file) {
       file.src.forEach(function(src) {
@@ -32,7 +35,13 @@ module.exports = function(grunt) {
         var contents = grunt.file.read(src);
 
         if (contents) {
-          contents = contents.replace(new RegExp('<!--[\\[\\(]if target ' + target + '[\\]\\)]>(<!-->)?([\\s\\S]*?)(<!--)?<![\\[\\(]endif[\\]\\)]-->', 'g'), '$2');
+          contents = contents.replace(new RegExp('<!--[\\[\\(]if target ' + target + '[\\]\\)]>(<!-->)?([\\s\\S]*?)(<!--)?<![\\[\\(]endif[\\]\\)]-->', 'g'), function(match, $1, $2) {
+            // Process any curly tags in content
+            return $2.replace(/\{\{([^{}]*)\}\}/g, function(match, search) {
+              var replace = options.curlyTags[search];
+              return ('string' === typeof replace) ? replace : match;
+            });
+          });
           contents = contents.replace(new RegExp('^[\\s\\t]+<!--[\\[\\(]if target .*?[\\]\\)]>(<!-->)?([\\s\\S]*?)(<!--)?<![\\[\\(]endif[\\]\\)]-->[\r\n]*', 'gm'), '');
           contents = contents.replace(new RegExp('<!--[\\[\\(]if target .*?[\\]\\)]>(<!-->)?([\\s\\S]*?)(<!--)?<![\\[\\(]endif[\\]\\)]-->[\r\n]*', 'g'), '');
           grunt.file.write(dest, contents);

@@ -1,7 +1,7 @@
 {
   "name": "grunt-targethtml",
   "description": "Produces html-output depending on grunt release version",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "homepage": "https://github.com/changer/grunt-targethtml",
   "author": {
     "name": "Ruben Stolk",
@@ -25,7 +25,7 @@
     "grunt-targethtml": "bin/grunt-targethtml"
   },
   "engines": {
-    "node": "*"
+    "node": ">= 0.8"
   },
   "scripts": {
     "test": "grunt test"
@@ -34,9 +34,9 @@
   },
   "devDependencies": {
     "grunt": "~0.4.0",
-    "grunt-contrib-clean": "~0.4.0",
-    "grunt-contrib-jshint": "~0.1.0",
-    "grunt-contrib-nodeunit": "~0.1.0"
+    "grunt-contrib-clean": "~0.4.0rc5",
+    "grunt-contrib-jshint": "~0.1.1rc5",
+    "grunt-contrib-nodeunit": "~0.1.2rc5"
   },
   "keywords": [
     "gruntplugin"

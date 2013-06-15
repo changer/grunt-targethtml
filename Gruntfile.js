@@ -38,6 +38,18 @@ module.exports = function(grunt) {
           'tmp/dist.html': 'test/fixtures/index.html',
           'tmp/second.html': 'test/fixtures/index.html'
         }
+      },
+      release: {
+        options: {
+          curlyTags: {
+            cssver: '001',
+            jsver: '002'
+          }
+        },
+
+        files: {
+          'tmp/release.html': 'test/fixtures/index.html'
+        }
       }
     },
 
