@@ -27,7 +27,7 @@ module.exports = function(grunt) {
         }
 
         if  (grunt.file.isDir(file.dest)) {
-          dest = file.dest + path.basename(src);
+          dest = file.dest + src;
         } else {
           dest = file.dest;
         }
