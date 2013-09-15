@@ -79,6 +79,23 @@ targethtml: {
 
 You could use the [if...] notation like we're used from the [if lt IE 9], but ironically that fails in IE.
 
+### Conditional Operators
+
+You can also use || and ! logical operators to match a target. It can be useful when one base code is used to build applications with more or less abilities
+
+```html
+<!--(if target dev || foo)><!-->
+  <link rel="stylesheet" href="dev_or_foo.css">
+<!--<!(endif)-->
+
+<!--(if target !(foo || bar))><!-->
+  <script src="not_foo_and_not_bar.js"></script>
+  <script>
+    var less = { env:'development' };
+  </script>
+<!--<!(endif)-->
+```
+
 ### Curly tags
 
 Between *target tags* you can use simple templating by empovering *curly tags* to pass custom variables. Curly tags must be defined like this:

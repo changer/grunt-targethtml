@@ -39,6 +39,16 @@ module.exports = function(grunt) {
           'tmp/second.html': 'test/fixtures/index.html'
         }
       },
+      foo: {
+        files: {
+          'tmp/foo.html': 'test/fixtures/index.html',
+        }
+      },
+      bar: {
+        files: {
+          'tmp/bar.html': 'test/fixtures/index.html',
+        }
+      },
       release: {
         options: {
           curlyTags: {

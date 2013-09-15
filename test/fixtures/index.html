@@ -35,6 +35,18 @@
   <link rel="stylesheet" href="foo.css">
 <!--<!(endif)-->
 
-<!--(if target bar)>
+<!--(if target bar)><!-->
   <link rel="stylesheet" href="bar.css">
-<!(endif)-->
+<!--<!(endif)-->
+
+<!--(if target bar || foo)><!-->
+  <link rel="stylesheet" href="bar_or_foo.css">
+<!--<!(endif)-->
+
+<!--(if target !bar)><!-->
+  <link rel="stylesheet" href="not_bar.css">
+<!--<!(endif)-->
+
+<!--(if target !(bar || foo))><!-->
+  <link rel="stylesheet" href="not_bar_and_not_foo.css">
+<!--<!(endif)-->
