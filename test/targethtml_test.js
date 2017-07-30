@@ -6,7 +6,7 @@ exports.targethtml = function(test){
 
   var expected, result;
 
-  test.expect(6);
+  test.expect(8);
 
   expected = grunt.file.read('test/expected/dev.html');
   result = grunt.file.read('tmp/dev.html');
@@ -29,6 +29,14 @@ exports.targethtml = function(test){
   expected = grunt.file.read('test/expected/bar.html');
   result = grunt.file.read('tmp/bar.html');
   test.equal(result, expected, 'should process :bar target');
+
+  expected = grunt.file.read('test/expected/single-quoted-literal-target.html');
+  result = grunt.file.read('tmp/single-quoted-literal-target.html');
+  test.equal(result, expected, 'should process :\'single-quoted-literal-target\' target');
+
+  expected = grunt.file.read('test/expected/double-quoted-literal-target.html');
+  result = grunt.file.read('tmp/double-quoted-literal-target.html');
+  test.equal(result, expected, 'should process :"double-quoted-literal-target" target');
 
   test.done();
 

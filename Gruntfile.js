@@ -49,6 +49,16 @@ module.exports = function(grunt) {
           'tmp/bar.html': 'test/fixtures/index.html',
         }
       },
+      'single-quoted-literal-target': {
+        files: {
+          'tmp/single-quoted-literal-target.html': 'test/fixtures/index.html',
+        }
+      },
+      'double-quoted-literal-target': {
+        files: {
+          'tmp/double-quoted-literal-target.html': 'test/fixtures/index.html',
+        }
+      },
       release: {
         options: {
           curlyTags: {

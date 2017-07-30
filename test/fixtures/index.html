@@ -50,3 +50,35 @@
 <!--(if target !(bar || foo))><!-->
   <link rel="stylesheet" href="not_bar_and_not_foo.css">
 <!--<!(endif)-->
+
+<!--(if target 'single-quoted-literal-target')><!-->
+  <link rel="stylesheet" href="single-quoted-literal-target.css">
+<!--<!(endif)-->
+
+<!--(if target 'single-quoted-literal-target' || foo)><!-->
+  <link rel="stylesheet" href="single-quoted-literal-target_or_foo.css">
+<!--<!(endif)-->
+
+<!--(if target !'single-quoted-literal-target')><!-->
+  <link rel="stylesheet" href="not_single-quoted-literal-target.css">
+<!--<!(endif)-->
+
+<!--(if target !('single-quoted-literal-target' || foo))><!-->
+  <link rel="stylesheet" href="not_single-quoted-literal-target_and_not_foo.css">
+<!--<!(endif)-->
+
+<!--(if target "double-quoted-literal-target")><!-->
+  <link rel="stylesheet" href="double-quoted-literal-target.css">
+<!--<!(endif)-->
+
+<!--(if target "double-quoted-literal-target" || foo)><!-->
+  <link rel="stylesheet" href="double-quoted-literal-target_or_foo.css">
+<!--<!(endif)-->
+
+<!--(if target !"double-quoted-literal-target")><!-->
+  <link rel="stylesheet" href="not_double-quoted-literal-target.css">
+<!--<!(endif)-->
+
+<!--(if target !("double-quoted-literal-target" || foo))><!-->
+  <link rel="stylesheet" href="not_double-quoted-literal-target_and_not_foo.css">
+<!--<!(endif)-->

@@ -14,18 +14,20 @@ function conditionalParser (target, expression) {
   switch(expression.type) {
     case 'LogicalExpression':
       if (expression.operator !== '||') { // we only compare one variable so && is useless
-        throw new Error('Syntax not supported');
+        throw new Error('Syntax not supported - \'||\' is the only supported binary logical operator');
       }
       return conditionalParser(target, expression.left) || conditionalParser(target, expression.right);
     case 'UnaryExpression':
       if (expression.operator !== '!') {
-        throw new Error('Syntax not supported');
+        throw new Error('Syntax not supported - \'!\' is the only supported unary operator');
       }
       return !conditionalParser(target, expression.argument);
     case 'Identifier':
       return target===expression.name;
+    case 'Literal':
+      return target===expression.value;
     default :
-      throw new Error('Syntax not supported');
+      throw new Error('Syntax not supported - only certain logical operators and strings allowed in target expression.');
   }
 }
 
