@@ -1,6 +1,6 @@
 # grunt-targethtml [![Build Status](https://travis-ci.org/srigi/grunt-targethtml.png)](https://travis-ci.org/srigi/grunt-targethtml)
 
-Preproces HTML files by using *target tags* depending on current grunt target. This grunt plugin allows you to specify different sets of assets for `dev` or `release` versions of your HTML files.
+Preprocess HTML files by using *target tags* depending on current grunt target. This grunt plugin allows you to specify different sets of assets for `dev` or `release` versions of your HTML files.
 
 ## Getting Started
 
@@ -98,7 +98,7 @@ You can also use || and ! logical operators to match a target. It can be useful 
 
 ### Curly tags
 
-Between *target tags* you can use simple templating by empovering *curly tags* to pass custom variables. Curly tags must be defined like this:
+Between *target tags* you can use simple templating by empowering *curly tags* to pass custom variables. Curly tags must be defined like this:
 
 ```html
 <!--(if target dist)>
@@ -110,7 +110,7 @@ Between *target tags* you can use simple templating by empovering *curly tags* t
 <!(endif)-->
 ```
 
-Curly tags helps you implement cache busting technique to update assets paths in production. Curly tags are defined in `options` of `targethtml` task. You can effectively use Grunt's templating when definig value of curly tags.
+Curly tags helps you implement cache busting technique to update assets paths in production. Curly tags are defined in the `options` of `targethtml` task. You can effectively use Grunt's templating when definig value of curly tags.
 
 ```js
 targethtml: {
